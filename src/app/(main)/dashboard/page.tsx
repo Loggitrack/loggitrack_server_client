@@ -27,10 +27,10 @@ export default function Dashboard() {
           fetch(`http://127.0.0.1:3020/request-log/distinct/urls`, {
             cache: "no-store",
           }),
-          fetch(`http://127.0.0.1:3020/models-changes/distict/model`, {
+          fetch(`http://127.0.0.1:3020/model-changes/distinct/model`, {
             cache: "no-store",
           }),
-          fetch(`http://127.0.0.1:3020/models-changes/distict/events`, {
+          fetch(`http://127.0.0.1:3020/model-changes/distinct/events`, {
             cache: "no-store",
           }),
         ]);
