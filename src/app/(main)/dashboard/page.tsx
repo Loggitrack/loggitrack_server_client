@@ -15,22 +15,28 @@ export default function Dashboard() {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [serverUrl, setServerUrl] = useState(null);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const host = window.location.host;
+      let domain = host.split(":")[0];
+      setServerUrl(`http://${domain}:3020`);
+    }
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
 
       try {
         const [statsRes, urlsRes, modelsRes, eventsRes] = await Promise.all([
-          fetch(`http://127.0.0.1:3020/stats/requests`, { cache: "no-store" }),
-          fetch(`http://127.0.0.1:3020/request-log/distinct/urls`, {
+          fetch(`${serverUrl}/stats/requests`, { cache: "no-store" }),
+          fetch(`${serverUrl}/request-log/distinct/urls`, {
             cache: "no-store",
           }),
-          fetch(`http://127.0.0.1:3020/model-changes/distinct/model`, {
+          fetch(`${serverUrl}/model-changes/distinct/model`, {
             cache: "no-store",
           }),
-          fetch(`http://127.0.0.1:3020/model-changes/distinct/events`, {
+          fetch(`${serverUrl}/model-changes/distinct/events`, {
             cache: "no-store",
           }),
         ]);

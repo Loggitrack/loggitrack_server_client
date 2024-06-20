@@ -70,15 +70,21 @@ export default function Models() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [totalPages, setTotalPages] = useState(null); // State for total pages
+  const [serverUrl, setServerUrl] = useState(null);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const host = window.location.host;
+      let domain = host.split(":")[0];
+      setServerUrl(`http://${domain}:3020`);
+    }
     const fetchData = async () => {
       setIsLoading(true);
       setError(null); // Clear previous errors
 
       try {
         const res = await fetch(
-          `http://127.0.0.1:3020/model-changes?page=${initialPage}`,
+          `${serverUrl}/model-changes?page=${initialPage}`,
           {
             cache: "no-store",
           }

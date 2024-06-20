@@ -35,45 +35,47 @@ export default function Analytics() {
   const [errorTypesData, setErrorTypesData] = useState([]);
   const [failedRequestsData, setFailedRequestsData] = useState([]);
 
+  const [serverUrl, setServerUrl] = useState(null);
+
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const host = window.location.host;
+      let domain = host.split(":")[0];
+      setServerUrl(`http://${domain}:3020`);
+    }
+
     async function fetchEndpointUsage() {
-      const response = await fetch("http://localhost:3020/api-usage/endpoints");
+      const response = await fetch(`${serverUrl}/api-usage/endpoints`);
       const data = await response.json();
       setEndpointUsageData(data);
     }
 
     async function fetchHTTPMethods() {
-      const response = await fetch(
-        "http://localhost:3020/api-usage/http-methods"
-      );
+      const response = await fetch(`${serverUrl}/api-usage/http-methods`);
       const data = await response.json();
       setHttpMethodsData(data);
     }
 
     async function fetchResponseTimes() {
-      const response = await fetch(
-        "http://localhost:3020/performance/response-times"
-      );
+      const response = await fetch(`${serverUrl}/performance/response-times`);
       const data = await response.json();
       setResponseTimesData(data);
     }
 
     async function fetchStatusCodes() {
-      const response = await fetch("http://localhost:3020/status-codes");
+      const response = await fetch(`${serverUrl}/status-codes`);
       const data = await response.json();
       setStatusCodesData(data);
     }
 
     async function fetchErrorTypes() {
-      const response = await fetch("http://localhost:3020/errors/types");
+      const response = await fetch(`${serverUrl}/errors/types`);
       const data = await response.json();
       setErrorTypesData(data);
     }
 
     async function fetchFailedRequests() {
-      const response = await fetch(
-        "http://localhost:3020/errors/failed-requests"
-      );
+      const response = await fetch(`${serverUrl}/errors/failed-requests`);
       const data = await response.json();
       setFailedRequestsData(data);
     }

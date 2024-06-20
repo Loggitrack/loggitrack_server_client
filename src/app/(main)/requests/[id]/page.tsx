@@ -13,7 +13,13 @@ import { Badge } from "@components/ui/badge";
 import { CalendarIcon } from "lucide-react";
 
 async function getData(id: any) {
-  const res = await fetch(`http://127.0.0.1:3020/request-log/${id}`, {
+  let serverUrl = "";
+  if (typeof window !== "undefined") {
+    const host = window.location.host;
+    let domain = host.split(":")[0];
+    serverUrl = `http://${domain}:3020`;
+  }
+  const res = await fetch(`${serverUrl}/request-log/${id}`, {
     cache: "no-store",
   });
   // The return value is *not* serialized
@@ -129,11 +135,12 @@ async function RequestDetail({ params }: any) {
           <TableRow>
             <TableCell>Cookies</TableCell>
             <TableCell>
-              {cookies && Object.entries(cookies).map(([key, value]) => (
-                <div key={key}>
-                  <strong>{key}:</strong> {value as any}
-                </div>
-              ))}
+              {cookies &&
+                Object.entries(cookies).map(([key, value]) => (
+                  <div key={key}>
+                    <strong>{key}:</strong> {value as any}
+                  </div>
+                ))}
             </TableCell>
           </TableRow>
           <TableRow>

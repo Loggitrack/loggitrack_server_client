@@ -1,7 +1,5 @@
 "use client";
 
-import Footer from "@components/Footer";
-import Navbar from "@components/Navbar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Sidebar from "../components/SideBar";
@@ -13,7 +11,10 @@ export default function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = sessionStorage.getItem("user");
+  var user = null;
+  if (typeof window !== "undefined") {
+    user = localStorage.getItem("user");
+  }
   const router = useRouter();
 
   if (!user) {
@@ -24,7 +25,7 @@ export default function DashboardLayout({
     <section>
       {/* Include shared UI here e.g. a header or sidebar */}
       <Suspense fallback={<div>Loading...</div>}>
-        <Sidebar children={children} />
+        <Sidebar> {children} </Sidebar>
       </Suspense>
     </section>
   );

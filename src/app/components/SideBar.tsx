@@ -113,11 +113,15 @@ export default function Sidebar({ title, children }: MyComponentProps) {
   useEffect(() => {
     const newStr = pathname.substring(1);
     setPageName(capitalizeString(newStr));
-    setUser(JSON.parse(sessionStorage.getItem("user")));
+    if (typeof window !== "undefined") {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    }
   }, [pathname]);
 
   const handleLogout = () => {
-    sessionStorage.clear();
+    if (typeof window !== "undefined") {
+      localStorage.clear();
+    }
     router.push("/auth");
   };
 

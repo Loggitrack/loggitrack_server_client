@@ -13,7 +13,7 @@ import {
 import { Input } from "@components/ui/input";
 import { Label } from "@components/ui/label";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -22,19 +22,33 @@ export default function Login() {
   const [password, setPassword] = useState(null);
   const [error, setError] = useState("");
   const router = useRouter();
+  const [serverUrl, setServerUrl] = useState(null);
+  
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const host = window.location.host;
+      let domain = host.split(":")[0];
+      localStorage.setItem("domain", domain);
+      localStorage.setItem("serverUrl", `http://${domain}:3020`);
+      setServerUrl(`http://${domain}:3020`);
+    }
+  }, []);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://127.0.0.1:3020/signin", {
+      const res = await axios.post(`${serverUrl}/signin`, {
         email: email,
         password: password,
       });
 
       if (res.status === 200) {
         console.log(res.data);
-        sessionStorage.setItem("user", JSON.stringify(res.data?.data));
+        if (typeof window !== "undefined") {
+          localStorage.setItem("user", JSON.stringify(res.data?.data));
+        }
         router.push("/dashboard");
       } else {
         setError("Failed trying to authenticate user.");
