@@ -17,21 +17,27 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+import { useSelector, useDispatch } from 'react-redux';
+import { AppState, AppDispatch } from './store';
+
+
 export default function Login() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [error, setError] = useState("");
   const router = useRouter();
   const [serverUrl, setServerUrl] = useState(null);
-  
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const host = window.location.host;
       let domain = host.split(":")[0];
       localStorage.setItem("domain", domain);
+
       localStorage.setItem("serverUrl", `http://${domain}:3020`);
       setServerUrl(`http://${domain}:3020`);
+      dispatch({ type: 'SET_SERVER_URL', payload: serverUrl });
     }
   }, []);
 
