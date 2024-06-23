@@ -17,8 +17,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { AppState, AppDispatch } from '../store';
+import {  useDispatch } from 'react-redux';
+import {  AppDispatch } from '../store';
 
 
 export default function Login() {

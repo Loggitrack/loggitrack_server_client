@@ -1,7 +1,6 @@
 // store.ts
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { persistStore, persistReducer, PersistConfig } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { configureStore, combineReducers, createStore } from '@reduxjs/toolkit'; 
+
 
 type RootState = {
   serverUrl: string | null;
@@ -25,23 +24,11 @@ const reducer = (state = initialState, action: Action): RootState => {
   }
 };
 
-const persistConfig: PersistConfig<RootState> = {
-  key: 'root',
-  storage,
-};
 
-const persistedReducer = persistReducer(persistConfig, reducer);
+const store = createStore(reducer);
 
-const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-});
 
-const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type AppState = ReturnType<typeof store.getState>;
-export { store, persistor };
+export { store };
