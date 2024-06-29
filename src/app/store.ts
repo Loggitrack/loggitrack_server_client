@@ -1,6 +1,17 @@
 // store.ts
 import { configureStore, combineReducers, createStore } from '@reduxjs/toolkit'; 
 import serverUrlReducer from './serverUrlSlice';
+import storage from 'redux-persist/lib/storage'; // Use localStorage as storage
+import { persistReducer, persistStore } from 'redux-persist'; 
+
+
+const persistConfig = {
+  key: 'root', // Key for storage
+  storage,    // Use localStorage
+};
+
+const persistedReducer = persistReducer(persistConfig, serverUrlReducer);
+
 
 type RootState = {
   serverUrl: string | null;
@@ -18,12 +29,15 @@ type Action = {
 
 
 
- export const store = configureStore({
-  reducer: {
-    // add your reducers here
-    serverUrl: serverUrlReducer,
-  },
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+          serializableCheck: false, // Disable check for non-serializable data
+      }),
 });
+
+export const persistor = persistStore(store); // Create persistor object
 
 
 

@@ -19,7 +19,7 @@ export default function Dashboard() {
   const [error, setError] = useState(null);
   // const [serverUrl, setServerUrl] = useState(null);
 
-  const serverUrl = useSelector((state: AppState) => state.serverUrl.serverUrl);
+  const serverUrl = useSelector((state: AppState) => state.serverUrl);
 
   console.log('dashboard serverurl', serverUrl);
 

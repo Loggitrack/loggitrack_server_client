@@ -37,7 +37,7 @@ export default function Analytics() {
   const [errorTypesData, setErrorTypesData] = useState([]);
   const [failedRequestsData, setFailedRequestsData] = useState([]);
 
-  const serverUrl = useSelector((state: AppState) => state.serverUrl.serverUrl);
+  const serverUrl = useSelector((state: AppState) => state.serverUrl);
 
   useEffect(() => {
   

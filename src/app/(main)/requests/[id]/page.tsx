@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../../store";
 
 async function getData(id: any) {
-  const serverUrl = useSelector((state: AppState) => state.serverUrl.serverUrl);
+  const serverUrl = useSelector((state: AppState) => state.serverUrl);
   const res = await fetch(`${serverUrl}/request-log/${id}`, {
     cache: "no-store",
   });

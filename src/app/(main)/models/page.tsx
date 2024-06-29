@@ -72,7 +72,7 @@ export default function Models() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [totalPages, setTotalPages] = useState(null); // State for total pages
-  const serverUrl = useSelector((state: AppState) => state.serverUrl.serverUrl);
+  const serverUrl = useSelector((state: AppState) => state.serverUrl);
 
   useEffect(() => {
     
