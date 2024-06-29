@@ -5,6 +5,8 @@ import DashboardCard from "@components/DashboardCard";
 import ListView from "@components/ListView";
 import OrderCard from "@components/OrderCard";
 import { useEffect, useState } from "react";
+import { AppState } from "../../store";
+import { useSelector } from "react-redux";
 
 export default function Dashboard() {
   const [data, setData] = useState({
@@ -15,14 +17,18 @@ export default function Dashboard() {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [serverUrl, setServerUrl] = useState(null);
+  // const [serverUrl, setServerUrl] = useState(null);
+
+  const serverUrl = useSelector((state: AppState) => state.serverUrl.serverUrl);
+
+  console.log('dashboard serverurl', serverUrl);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const host = window.location.host;
-      let domain = host.split(":")[0];
-      setServerUrl(`http://${domain}:3020`);
-    }
+    // if (typeof window !== "undefined") {
+    //   const host = window.location.host;
+    //   let domain = host.split(":")[0];
+    //   setServerUrl(`http://${domain}:3020`);
+    // }
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
