@@ -1,34 +1,12 @@
-// store.ts
-import { configureStore, combineReducers, createStore } from '@reduxjs/toolkit'; 
+import { configureStore } from '@reduxjs/toolkit'; 
+import serverUrlReducer from './serverUrlSlice';
 
+export const store = configureStore({
+  reducer: {
+    serverUrl: serverUrlReducer, // Your reducer
+  },
+});
 
-type RootState = {
-  serverUrl: string | null;
-};
-
-const initialState: RootState = {
-  serverUrl: null,
-};
-
-type Action = {
-  type: 'SET_SERVER_URL';
-  payload: string;
-};
-
-const reducer = (state = initialState, action: Action): RootState => {
-  switch (action.type) {
-    case 'SET_SERVER_URL':
-      return { ...state, serverUrl: action.payload };
-    default:
-      return state;
-  }
-};
-
-
-const store = createStore(reducer);
-
-
-
-export type AppDispatch = typeof store.dispatch;
+// Infer types from the store itself
 export type AppState = ReturnType<typeof store.getState>;
-export { store };
+export type AppDispatch = typeof store.dispatch;
