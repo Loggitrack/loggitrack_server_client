@@ -28,10 +28,8 @@ export default function Login() {
   const [error, setError] = useState("");
   const router = useRouter();
   const [serverUrl, setServerUrl] = useState(null);
-  const dispatch = null;
-  if (typeof window !== "undefined") {
-    const dispatch = useDispatch();
-  }
+  const dispatch = useDispatch<AppDispatch>();
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const host = window.location.host;
