@@ -39,7 +39,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: manfouothierno/loggitrack-client
+          images: manfouothierno/loggitrack-client:latest
 
       - name: Build and push Docker image
         id: push
@@ -48,7 +48,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: 'latest'
+          # tags: 'latest'
           # labels: ${{ steps.meta.outputs.labels }}
       
       
