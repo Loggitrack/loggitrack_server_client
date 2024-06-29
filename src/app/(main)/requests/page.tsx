@@ -74,7 +74,7 @@ export default function Requests() {
   const [totalPages, setTotalPages] = useState(null); // State for total pages
 
   // const [serverUrl, setServerUrl] = useState('http://0.0.0.0:3020');
-  const serverUrl = useSelector((state: AppState) => state.serverUrl);
+  const serverUrl = useSelector((state: AppState) => state.serverUrl.serverUrl);
 
   useEffect(() => {
     // if (typeof window !== "undefined") {

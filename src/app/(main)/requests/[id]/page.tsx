@@ -11,14 +11,11 @@ import {
 } from "@components/ui/table";
 import { Badge } from "@components/ui/badge";
 import { CalendarIcon } from "lucide-react";
+import { useSelector } from "react-redux";
+import { AppState } from "../../../store";
 
 async function getData(id: any) {
-  let serverUrl = "";
-  if (typeof window !== "undefined") {
-    const host = window.location.host;
-    let domain = host.split(":")[0];
-    serverUrl = `http://${domain}:3020`;
-  }
+  const serverUrl = useSelector((state: AppState) => state.serverUrl.serverUrl);
   const res = await fetch(`${serverUrl}/request-log/${id}`, {
     cache: "no-store",
   });

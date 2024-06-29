@@ -30,6 +30,8 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useSelector } from "react-redux";
+import { AppState } from "../../store";
 
 function usePagination(currentPage, totalPages) {
   const [page, setPage] = useState(currentPage);
@@ -70,14 +72,10 @@ export default function Models() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [totalPages, setTotalPages] = useState(null); // State for total pages
-  const [serverUrl, setServerUrl] = useState(null);
+  const serverUrl = useSelector((state: AppState) => state.serverUrl.serverUrl);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const host = window.location.host;
-      let domain = host.split(":")[0];
-      setServerUrl(`http://${domain}:3020`);
-    }
+    
     const fetchData = async () => {
       setIsLoading(true);
       setError(null); // Clear previous errors

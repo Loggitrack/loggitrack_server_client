@@ -14,6 +14,8 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
+import { useSelector } from "react-redux";
+import { AppState } from "../../store";
 
 ChartJS.register(
   CategoryScale,
@@ -35,14 +37,10 @@ export default function Analytics() {
   const [errorTypesData, setErrorTypesData] = useState([]);
   const [failedRequestsData, setFailedRequestsData] = useState([]);
 
-  const [serverUrl, setServerUrl] = useState(null);
+  const serverUrl = useSelector((state: AppState) => state.serverUrl.serverUrl);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const host = window.location.host;
-      let domain = host.split(":")[0];
-      setServerUrl(`http://${domain}:3020`);
-    }
+  
 
     async function fetchEndpointUsage() {
       const response = await fetch(`${serverUrl}/api-usage/endpoints`);
